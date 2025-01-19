@@ -2,7 +2,7 @@
   "name": "Binance-Heikin-Ashi-API",
   "description": "A FastAPI application to fetch and convert Binance Futures candlestick data into Heikin Ashi candles.",
   "repository": "https://github.com/TharushaPro/binance-heikin-ashi-api",
-  "logo": "https://www.babypips.com/learn/forex/how-to-use-a-heikin-ashi-chart",
+  "logo": "https://via.placeholder.com/150",
   "keywords": ["fastapi", "binance", "heikin-ashi", "api"],
   "env": {
     "BINANCE_API_URL": {
@@ -18,7 +18,7 @@
   "formation": {
     "web": {
       "quantity": 1,
-      "size": "free"
+      "size": "eco"
     }
   },
   "addons": [],

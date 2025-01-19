@@ -23,3 +23,6 @@ If you prefer to deploy manually, follow these steps:
    ```bash
    git clone https://github.com/yourusername/binance-heikin-ashi-api.git
    cd binance-heikin-ashi-api
+
+
+**_Please Note:_** *Do not host this application on servers located in the USA due to regulatory restrictions.*

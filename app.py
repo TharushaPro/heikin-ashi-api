@@ -7,7 +7,7 @@ import os
 
 app = FastAPI(title="Binance Futures Heikin Ashi API")
 
-BINANCE_API_URL = "https://fapi.binance.com/fapi/v1/klines"
+BINANCE_API_URL = os.getenv("BINANCE_API_URL", "https://fapi.binance.com/fapi/v1/klines")
 
 class CandleRequest(BaseModel):
     ticker: str
@@ -16,6 +16,7 @@ class CandleRequest(BaseModel):
 
 def calculate_heikin_ashi(candles):
     heikin_ashi = []
+    ha_prev = {}
     for i, candle in enumerate(candles):
         open_price = float(candle[1])
         high = float(candle[2])
@@ -23,20 +24,30 @@ def calculate_heikin_ashi(candles):
         close_price = float(candle[4])
 
         if i == 0:
-            ha_close = (open_price + high + low + close_price) / 4
+            # For the first candle, HA Open is (Open + Close) / 2
             ha_open = (open_price + close_price) / 2
+            # HA Close is (Open + High + Low + Close) / 4
+            ha_close = (open_price + high + low + close_price) / 4
         else:
-            ha_close = (open_prev['open'] + open_prev['close'] + open_prev['high'] + open_prev['low']) / 4
+            # HA Open is the average of the previous HA Open and HA Close
             ha_open = (ha_prev['open'] + ha_prev['close']) / 2
+            # HA Close is the average of Open, High, Low, Close
+            ha_close = (open_price + high + low + close_price) / 4
+
+        # HA High is the maximum of High, HA Open, HA Close
+        ha_high = max(high, ha_open, ha_close)
+        # HA Low is the minimum of Low, HA Open, HA Close
+        ha_low = min(low, ha_open, ha_close)
 
         ha = {
             'open': ha_open,
-            'high': high,
-            'low': low,
+            'high': ha_high,
+            'low': ha_low,
             'close': ha_close
         }
         heikin_ashi.append(ha)
-        ha_prev = ha
+        ha_prev = ha  # Update previous HA candle
+
     return heikin_ashi
 
 @app.post("/heikin-ashi")

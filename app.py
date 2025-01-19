@@ -10,6 +10,7 @@ app = FastAPI(title="Binance Futures Heikin Ashi API")
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# Fetch Binance API URL from environment variables or use the default
 BINANCE_API_URL = os.getenv("BINANCE_API_URL", "https://fapi.binance.com/fapi/v1/klines")
 
 class CandleRequest(BaseModel):
@@ -66,7 +67,8 @@ def get_heikin_ashi(request: CandleRequest):
     logger.info(f"Binance API Response Status Code: {response.status_code}")
 
     if response.status_code != 200:
-        logger.error("Error fetching data from Binance API")
+        # Log the full response for debugging
+        logger.error(f"Binance API Error Response: {response.text}")
         raise HTTPException(status_code=400, detail="Error fetching data from Binance API")
 
     candles = response.json()

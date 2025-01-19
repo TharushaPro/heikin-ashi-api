@@ -12,7 +12,7 @@ This repository contains a FastAPI application that retrieves Heikin Ashi candle
 
 Click the button below to deploy the application to Heroku.
 
-[![Deploy](https://www.heroku.com/deploy/button.svg)](https://heroku.com/deploy)
+[![Deploy](https://www.heroku.com/deploy/button.svg)](https://dashboard.heroku.com/new?template=https://github.com/TharushaPro/heikin-ashi/)
 
 ### Manual Deployment
 

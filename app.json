@@ -1,8 +1,8 @@
 {
   "name": "Binance-Heikin-Ashi-API",
   "description": "A FastAPI application to fetch and convert Binance Futures candlestick data into Heikin Ashi candles.",
-  "repository": "https://github.com/yourusername/binance-heikin-ashi-api",
-  "logo": "https://yourdomain.com/path-to-logo/logo.png",
+  "repository": "https://github.com/TharushaPro/binance-heikin-ashi-api",
+  "logo": "https://via.placeholder.com/150",  // Updated with a placeholder logo
   "keywords": ["fastapi", "binance", "heikin-ashi", "api"],
   "env": {
     "BINANCE_API_URL": {

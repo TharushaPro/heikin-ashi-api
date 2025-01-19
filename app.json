@@ -1,35 +1,28 @@
 {
-  "name": "Telegram Telethon Bot",
-  "description": "A Telegram bot built with Telethon, deployed on Heroku.",
-  "repository": "https://github.com/TharushaPro/telegram-telethon-bot",
-  "logo": "https://github.com/TharushaPro/telegram-telethon-bot/blob/main/logo.png",
-  "keywords": ["python", "telegram", "telethon", "bot"],
+  "name": "Binance-Heikin-Ashi-API",
+  "description": "A FastAPI application to fetch and convert Binance Futures candlestick data into Heikin Ashi candles.",
+  "repository": "https://github.com/TharushaPro/binance-heikin-ashi-api",
+  "logo": "https://via.placeholder.com/150",
+  "keywords": ["fastapi", "binance", "heikin-ashi", "api"],
   "env": {
-    "TELEGRAM_API_ID": {
-      "description": "Your Telegram API ID",
-      "required": true
-    },
-    "TELEGRAM_API_HASH": {
-      "description": "Your Telegram API Hash",
-      "required": true
-    },
-    "TELEGRAM_BOT_TOKEN": {
-      "description": "Your Telegram Bot Token from BotFather",
-      "required": true
-    },
-    "TELEGRAM_RECIPIENT": {
-      "description": "Recipient's username or user ID to receive notifications",
-      "required": true
+    "BINANCE_API_URL": {
+      "description": "Base URL for Binance Futures API",
+      "value": "https://fapi.binance.com/fapi/v1/klines"
     }
   },
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ],
   "formation": {
-    "worker": {
+    "web": {
       "quantity": 1,
-      "size": "free"
+      "size": "eco"
     }
   },
   "addons": [],
   "scripts": {
-    "postdeploy": "python app.py"
+    "postdeploy": "echo 'Deployment Complete!'"
   }
 }

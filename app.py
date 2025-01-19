@@ -1,11 +1,14 @@
-# app.py
-
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import requests
 import os
+import logging
 
 app = FastAPI(title="Binance Futures Heikin Ashi API")
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 BINANCE_API_URL = os.getenv("BINANCE_API_URL", "https://fapi.binance.com/fapi/v1/klines")
 
@@ -52,6 +55,7 @@ def calculate_heikin_ashi(candles):
 
 @app.post("/heikin-ashi")
 def get_heikin_ashi(request: CandleRequest):
+    logger.info(f"Received request: {request}")
     params = {
         'symbol': request.ticker.upper(),
         'interval': request.interval,
@@ -59,11 +63,14 @@ def get_heikin_ashi(request: CandleRequest):
     }
 
     response = requests.get(BINANCE_API_URL, params=params)
+    logger.info(f"Binance API Response Status Code: {response.status_code}")
 
     if response.status_code != 200:
+        logger.error("Error fetching data from Binance API")
         raise HTTPException(status_code=400, detail="Error fetching data from Binance API")
 
     candles = response.json()
     heikin_ashi = calculate_heikin_ashi(candles)
+    logger.info("Successfully calculated Heikin Ashi candles")
 
     return {"heikin_ashi_candles": heikin_ashi}
